@@ -1,14 +1,23 @@
-pipeline{
+pipeline {
     agent any
-    stages{
-        stage('Build'){
-            steps{
-                sh 'docker build -t calculator .'
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                checkout scm
             }
         }
-        stage('Test'){
-            steps{
-                sh 'docker run calculator'
+
+        stage('Test') {
+            steps {
+                bat 'pytest'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                bat 'docker build -t calculator .'
             }
         }
     }
