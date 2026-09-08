@@ -15,10 +15,19 @@ pipeline {
             }
         }
 
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    bat 'sonar-scanner'
+                }
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 bat 'docker build -t calculator .'
             }
         }
+
     }
 }
